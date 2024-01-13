@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq4sncaeo36nb"]
+
+[ext_resource type="Texture2D" uid="uid://cabs2uw41gthj" path="res://icon.svg" id="1_fqo7i"]
+[ext_resource type="Script" path="res://Scripts/Platform.cs" id="1_ule16"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j4glj"]
+friction = 0.0
+bounce = 0.15
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rdvxl"]
+size = Vector2(499, 55)
+
+[node name="Platform" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_j4glj")
+gravity_scale = 0.0
+script = ExtResource("1_ule16")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rdvxl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3.91406, 0.445312)
+texture = ExtResource("1_fqo7i")
