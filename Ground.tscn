@@ -3,14 +3,14 @@
 [ext_resource type="Texture2D" uid="uid://cabs2uw41gthj" path="res://icon.svg" id="1_le6yk"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j4glj"]
-friction = 0.0
-bounce = 0.15
-absorbent = true
+friction = 0.1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rdvxl"]
 size = Vector2(1083.5, 341.5)
 
 [node name="Ground" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_j4glj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

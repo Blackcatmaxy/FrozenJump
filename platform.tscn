@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/Platform.cs" id="1_ule16"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j4glj"]
-friction = 0.0
+friction = 0.1
 bounce = 0.15
 absorbent = true
 
@@ -12,6 +12,9 @@ absorbent = true
 size = Vector2(499, 55)
 
 [node name="Platform" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 3
+mass = 80.48
 physics_material_override = SubResource("PhysicsMaterial_j4glj")
 gravity_scale = 0.0
 script = ExtResource("1_ule16")

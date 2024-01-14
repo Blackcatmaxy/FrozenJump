@@ -5,11 +5,11 @@ public partial class CameraFollower : Camera2D
 {
 	[Export]
 	public RichTextLabel Label;
-	private Player _player;
+	private RigidPlayer _player;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_player = GetNode<Player>("../Player");
+		_player = GetNode<RigidPlayer>("../Player");
 		GD.Print($"Hello, world! {_player.Position.X}");
 	}
 
@@ -25,7 +25,7 @@ public partial class CameraFollower : Camera2D
 		if (yTarget > _player.Position.Y)
 			yTarget = _player.Position.Y;
 		var target = new Vector2(_player.Position.X, yTarget);
-		var speed = 0.5f * Mathf.Abs(Position.X - _player.Position.X) * (float)delta;
+		var speed = 0.666f * Mathf.Abs(Position.X - _player.Position.X) * (float)delta;
 		Position = Position.MoveToward(target, speed);
 	}
 }

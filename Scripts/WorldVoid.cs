@@ -19,8 +19,13 @@ public partial class WorldVoid : Area2D
 	{
 		// GD.Print($"Body enters {body.GetNode<Platform>(".") != null}");
 		if (body.GetNodeOrNull<Platform>(".") != null)
-			body.Position = new Vector2(body.Position.X, -700);
-		else if (body.GetNodeOrNull<Player>(".") != null)
-			body.Position = new Vector2(-284, -18);
+			// body.Position = new Vector2(body.Position.X, -700);
+			body.QueueFree();
+		else if (body.GetNodeOrNull<RigidPlayer>(".") is RigidPlayer player)
+		{
+			PhysicsServer2D.BodySetState(player.GetRid()
+				, PhysicsServer2D.BodyState.Transform, Transform2D.Identity.Translated(new Vector2(-284, -18)));
+			// body.Position = new Vector2(-284, -18);
+		}
 	}
 }

@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bxpfskj8i7teb"]
+[gd_scene load_steps=8 format=3 uid="uid://bxpfskj8i7teb"]
 
-[ext_resource type="PackedScene" uid="uid://0rcsv1330jjh" path="res://player.tscn" id="1_oycu0"]
 [ext_resource type="PackedScene" uid="uid://bq4sncaeo36nb" path="res://platform.tscn" id="2_ntplh"]
 [ext_resource type="Script" path="res://Scripts/CameraFollower.cs" id="3_odc6r"]
 [ext_resource type="PackedScene" uid="uid://v0ydjjtc3hws" path="res://Ground.tscn" id="4_bgcet"]
+[ext_resource type="Script" path="res://Scripts/PlatformSpawner.cs" id="5_5elsy"]
+[ext_resource type="PackedScene" uid="uid://ciaf78o3pq5oj" path="res://RigidPlayer.tscn" id="5_gmx71"]
 [ext_resource type="Script" path="res://Scripts/WorldVoid.cs" id="5_hia7t"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_idhj1"]
@@ -11,11 +12,9 @@
 [node name="Node2D" type="Node2D"]
 position = Vector2(0, -1)
 
-[node name="Player" parent="." instance=ExtResource("1_oycu0")]
-position = Vector2(-284, -85)
-
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Label")]
 position = Vector2(-324, 164.14)
+zoom = Vector2(0.75, 0.75)
 position_smoothing_enabled = true
 script = ExtResource("3_odc6r")
 Label = NodePath("Container/RichTextLabel")
@@ -46,13 +45,15 @@ position = Vector2(-651, 192)
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(3, 368)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("5_hia7t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("WorldBoundaryShape2D_idhj1")
 
 [node name="Platforms" type="Node2D" parent="."]
-position = Vector2(0, -69)
+position = Vector2(-6033, -1071)
 
 [node name="Platform" parent="Platforms" instance=ExtResource("2_ntplh")]
 position = Vector2(818, 233)
@@ -83,5 +84,22 @@ position = Vector2(214, -85)
 
 [node name="Platform10" parent="Platforms" instance=ExtResource("2_ntplh")]
 position = Vector2(777, -477)
+
+[node name="Player" parent="." instance=ExtResource("5_gmx71")]
+position = Vector2(-270, -69)
+Accel = 5.0
+Speed = 15.0
+JumpForce = -500.0
+
+[node name="Platform" parent="." instance=ExtResource("2_ntplh")]
+position = Vector2(-700, -69)
+script = null
+
+[node name="PlatformSpawner" type="Node2D" parent="."]
+position = Vector2(511, -838)
+script = ExtResource("5_5elsy")
+platform = ExtResource("2_ntplh")
+spawnRange = 1600.0
+spawnInterval = 0.3
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_body_entered"]
