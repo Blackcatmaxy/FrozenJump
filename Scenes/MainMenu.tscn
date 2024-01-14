@@ -62,6 +62,7 @@ layout_mode = 2
 text = "Exit"
 
 [node name="PanelContainer" type="PanelContainer" parent="Control"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.408

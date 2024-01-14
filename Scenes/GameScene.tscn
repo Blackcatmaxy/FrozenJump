@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://bxpfskj8i7teb"]
+[gd_scene load_steps=16 format=3 uid="uid://bxpfskj8i7teb"]
 
 [ext_resource type="Texture2D" uid="uid://dp0oxyx1bcn24" path="res://Sprites/boots.png" id="2_lgks1"]
+[ext_resource type="Texture2D" uid="uid://cyc7b4rwgqdf1" path="res://Sprites/doubleJump.png" id="3_4ghyp"]
 [ext_resource type="Script" path="res://Scripts/CameraFollower.cs" id="3_odc6r"]
 [ext_resource type="PackedScene" uid="uid://v0ydjjtc3hws" path="res://Scenes/Ground.tscn" id="4_bgcet"]
 [ext_resource type="Script" path="res://Scripts/PlatformSpawner.cs" id="5_5elsy"]
@@ -22,7 +23,7 @@ size = Vector2(124.133, 103.939)
 position = Vector2(0, -1)
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Label")]
-position = Vector2(-324, 164.14)
+position = Vector2(972, 332.14)
 position_smoothing_enabled = true
 script = ExtResource("3_odc6r")
 Label = NodePath("Container/RichTextLabel")
@@ -64,11 +65,15 @@ offset_top = -257.0
 offset_right = 8.0
 offset_bottom = -282.0
 text = "Click to Open Shop"
-item_count = 1
+item_count = 2
 popup/item_0/text = "Jumping Boots (10m)"
 popup/item_0/icon = ExtResource("2_lgks1")
 popup/item_0/checkable = 1
 popup/item_0/id = 0
+popup/item_1/text = "Double Jump (20m)"
+popup/item_1/icon = ExtResource("3_4ghyp")
+popup/item_1/checkable = 1
+popup/item_1/id = 1
 
 [node name="Ground" parent="." instance=ExtResource("4_bgcet")]
 position = Vector2(-651, 198)
@@ -88,6 +93,7 @@ position = Vector2(-270, -69)
 Accel = 5.0
 Speed = 15.0
 JumpForce = -600.0
+metadata/_edit_lock_ = true
 
 [node name="PlatformSpawner" type="Node2D" parent="."]
 position = Vector2(415, -1910)
@@ -100,17 +106,19 @@ spawnInterval = 0.2
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 follow_viewport_enabled = true
-scroll_base_scale = Vector2(0.17, 0.17)
+scroll_base_scale = Vector2(0.03, 0.03)
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Img4098" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(405, -2641)
+texture_filter = 1
+position = Vector2(843, -2526)
 scale = Vector2(4.69707, 4.69707)
 texture = ExtResource("9_37w5f")
 
 [node name="Shop" type="Sprite2D" parent="." node_paths=PackedStringArray("shopToggle", "cameraFollower", "player")]
 z_index = -195
+texture_filter = 1
 position = Vector2(-701, -54)
 scale = Vector2(1.68367, 1.68367)
 texture = ExtResource("10_c2lsy")

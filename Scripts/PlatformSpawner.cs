@@ -32,15 +32,12 @@ public partial class PlatformSpawner : Node2D
 				< 5 => platform4wide.Instantiate<Platform>(),
 				_ => platform6wide.Instantiate<Platform>(),
 			};
-			// var created = platform.Instantiate<Platform>();
+			
 			AddChild(platform);
 			var position = Position;
 			float offset = _random.NextSingle() * spawnRange - spawnRange/2;
 			position.X += offset;
 			int scale = _random.Next() % 5;
-			
-			GD.Print($"Spawning {offset}, {position.X}");
-			// created.Position = position;
 			
 			// PhysicsServer2D.BodySetState(created.GetRid(), PhysicsServer2D.BodyState.Transform, Transform2D.Identity.Translated(position));
 			platform.Position = position;

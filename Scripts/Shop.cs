@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using FrozenJump.Scripts;
 
 public partial class Shop : Sprite2D
 {
@@ -9,6 +10,11 @@ public partial class Shop : Sprite2D
 	private MenuButton menuButton;
 	private PopupMenu popupMenu;
 	private bool[] toggles = new bool[5];
+
+	private PlayerUpgrade[] upgrades = new[] { 
+		new PlayerUpgrade() { Accel = 2, Speed = 3, JumpForce = -200 }, 
+		new PlayerUpgrade() { JumpForce = 175, MaxJumps = 1}
+	};
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -29,24 +35,20 @@ public partial class Shop : Sprite2D
 		shopToggle.Visible = true;
 		var meters = cameraFollower.highest;
 		popupMenu.SetItemDisabled(0, (meters < 10));
-		
+		popupMenu.SetItemDisabled(1, (meters < 20));
 	}
 
 	public void OnPress(int index)
 	{
 		toggles[index] = !toggles[index];
-		popupMenu.SetItemChecked(0, toggles[index]);
+		popupMenu.SetItemChecked(index, toggles[index]);
 		if (popupMenu.IsItemChecked(index))
 		{
-			player.Accel = 7;
-			player.Speed = 18;
-			player.JumpForce = -750;
+			upgrades[index].ApplyUpgrade(player);
 		}
 		else
 		{
-			player.Accel = 5;
-			player.Speed = 15;
-			player.JumpForce = -500;
+			upgrades[index].RemoveUpgrade(player);
 		}
 	}
 	

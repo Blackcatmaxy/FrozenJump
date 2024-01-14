@@ -7,6 +7,10 @@ public partial class RigidPlayer : RigidBody2D
 	public float Accel = 10f, Speed = 30.0f, JumpForce = -40.0f;
 	[Export]
 	public float SpeedScale { get; private set;  }
+
+	[Export] public int maxJumps = 1;
+	private int currentJumps = 0;
+	private double deltaJump = 0;
 	public Area2D jumpZone;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -22,18 +26,25 @@ public partial class RigidPlayer : RigidBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		deltaJump += delta;
+		
 		bool onFloor = jumpZone.GetOverlappingBodies().Count > 0;
-
-		if (Input.IsActionJustPressed("ui_accept") && onFloor)
+		if (onFloor && deltaJump > 0.2)
+			currentJumps = 0;
+		
+		// hacked together double jump
+		if (Input.IsActionJustPressed("jump") && (onFloor || (currentJumps < maxJumps && maxJumps > 1)))
 		{
+			deltaJump = 0;
+			GD.Print($"{currentJumps}, {maxJumps}");
 			ApplyCentralImpulse(new Vector2(0, JumpForce));
-			GD.Print("Juml");
+			currentJumps++;
 		}
 			
 
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
-		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+		Vector2 direction = Input.GetVector("left", "right", "ui_up", "ui_down");
 		direction.Y = 0;
 		
 		// Don't accelerate over the max speed? Might not be working yet
