@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6tmyrp08rrdg"]
+
+[ext_resource type="Script" path="res://Scripts/Platform.cs" id="1_01o16"]
+[ext_resource type="Texture2D" uid="uid://yoqili6tydy5" path="res://Sprites/Sprite-Ice-Test.png" id="2_b1no3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j4glj"]
+friction = 0.2
+bounce = 0.15
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rdvxl"]
+size = Vector2(499, 46)
+
+[node name="Platform" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 3
+mass = 80.48
+physics_material_override = SubResource("PhysicsMaterial_j4glj")
+gravity_scale = 0.0
+script = ExtResource("1_01o16")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.185, 1)
+shape = SubResource("RectangleShape2D_rdvxl")
+
+[node name="Sprite-ice-test1" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(23, 0)
+scale = Vector2(1.4375, 1.4375)
+texture = ExtResource("2_b1no3")
+
+[node name="Sprite-ice-test2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-23, 0)
+scale = Vector2(1.4375, 1.4375)
+texture = ExtResource("2_b1no3")

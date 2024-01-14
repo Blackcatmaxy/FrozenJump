@@ -1,0 +1,130 @@
+[gd_scene load_steps=15 format=3 uid="uid://bxpfskj8i7teb"]
+
+[ext_resource type="Texture2D" uid="uid://dp0oxyx1bcn24" path="res://Sprites/boots.png" id="2_lgks1"]
+[ext_resource type="Script" path="res://Scripts/CameraFollower.cs" id="3_odc6r"]
+[ext_resource type="PackedScene" uid="uid://v0ydjjtc3hws" path="res://Scenes/Ground.tscn" id="4_bgcet"]
+[ext_resource type="Script" path="res://Scripts/PlatformSpawner.cs" id="5_5elsy"]
+[ext_resource type="PackedScene" uid="uid://ciaf78o3pq5oj" path="res://Scenes/RigidPlayer.tscn" id="5_gmx71"]
+[ext_resource type="Script" path="res://Scripts/WorldVoid.cs" id="5_hia7t"]
+[ext_resource type="PackedScene" uid="uid://byruxncnmjesf" path="res://Scenes/platform6wide.tscn" id="7_uqjcr"]
+[ext_resource type="PackedScene" uid="uid://dwtgl6cvnorv6" path="res://Scenes/platform4wide.tscn" id="8_46obt"]
+[ext_resource type="PackedScene" uid="uid://b6tmyrp08rrdg" path="res://Scenes/platform2wide.tscn" id="8_46pxq"]
+[ext_resource type="Texture2D" uid="uid://njbk7xu0nbu" path="res://Sprites/IMG_4098.jpeg" id="9_37w5f"]
+[ext_resource type="Texture2D" uid="uid://ca3jk6orn6ah6" path="res://Sprites/shop.png" id="10_c2lsy"]
+[ext_resource type="Script" path="res://Scripts/Shop.cs" id="11_b5wpn"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_idhj1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vpw2r"]
+size = Vector2(124.133, 103.939)
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(0, -1)
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Label")]
+position = Vector2(-324, 164.14)
+position_smoothing_enabled = true
+script = ExtResource("3_odc6r")
+Label = NodePath("Container/RichTextLabel")
+
+[node name="Container" type="Control" parent="Camera2D"]
+z_index = 835
+layout_mode = 3
+anchors_preset = 0
+offset_left = 324.0
+offset_top = -164.14
+offset_right = 364.0
+offset_bottom = -124.14
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Camera2D/Container"]
+layout_mode = 2
+anchor_left = -21.685
+anchor_top = -3.45
+anchor_right = -17.475
+anchor_bottom = -2.7
+offset_left = 2.40009
+offset_top = -1.52588e-05
+offset_right = 0.00012207
+text = "Height XYZ"
+metadata/_edit_use_anchors_ = true
+
+[node name="Container2" type="Control" parent="Camera2D"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MenuButton" type="MenuButton" parent="Camera2D/Container2"]
+layout_mode = 2
+anchor_left = -8.65
+anchor_top = -1.575
+offset_left = 3.05176e-05
+offset_top = -257.0
+offset_right = 8.0
+offset_bottom = -282.0
+text = "Click to Open Shop"
+item_count = 1
+popup/item_0/text = "Jumping Boots (10m)"
+popup/item_0/icon = ExtResource("2_lgks1")
+popup/item_0/checkable = 1
+popup/item_0/id = 0
+
+[node name="Ground" parent="." instance=ExtResource("4_bgcet")]
+position = Vector2(-651, 198)
+
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("camera")]
+position = Vector2(3, 368)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("5_hia7t")
+camera = NodePath("../Camera2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("WorldBoundaryShape2D_idhj1")
+
+[node name="Player" parent="." instance=ExtResource("5_gmx71")]
+position = Vector2(-270, -69)
+Accel = 5.0
+Speed = 15.0
+JumpForce = -600.0
+
+[node name="PlatformSpawner" type="Node2D" parent="."]
+position = Vector2(415, -1910)
+script = ExtResource("5_5elsy")
+platform2wide = ExtResource("8_46pxq")
+platform4wide = ExtResource("8_46obt")
+platform6wide = ExtResource("7_uqjcr")
+spawnRange = 1600.0
+spawnInterval = 0.2
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+follow_viewport_enabled = true
+scroll_base_scale = Vector2(0.17, 0.17)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Img4098" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(405, -2641)
+scale = Vector2(4.69707, 4.69707)
+texture = ExtResource("9_37w5f")
+
+[node name="Shop" type="Sprite2D" parent="." node_paths=PackedStringArray("shopToggle", "cameraFollower", "player")]
+z_index = -195
+position = Vector2(-701, -54)
+scale = Vector2(1.68367, 1.68367)
+texture = ExtResource("10_c2lsy")
+script = ExtResource("11_b5wpn")
+shopToggle = NodePath("../Camera2D/Container2")
+cameraFollower = NodePath("../Camera2D")
+player = NodePath("../Player")
+
+[node name="Area2D" type="Area2D" parent="Shop"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shop/Area2D"]
+position = Vector2(-2.67273, -1.48485)
+shape = SubResource("RectangleShape2D_vpw2r")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_body_entered"]
+[connection signal="body_entered" from="Shop/Area2D" to="Shop" method="OnEnter"]
+[connection signal="body_exited" from="Shop/Area2D" to="Shop" method="OnLeave"]

@@ -6,6 +6,8 @@ public partial class CameraFollower : Camera2D
 	[Export]
 	public RichTextLabel Label;
 	private RigidPlayer _player;
+
+	public int highest;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -16,7 +18,10 @@ public partial class CameraFollower : Camera2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Label.Text = $"Height: {-(int)_player.Position.Y}";
+		int height = -(int)(_player.Position.Y / 32);
+		if (height > highest)
+			highest = height;
+		Label.Text = $"Height: {height}/{highest}m";
 	}
 	
 	public override void _PhysicsProcess (double delta)

@@ -1,0 +1,94 @@
+[gd_scene load_steps=5 format=3 uid="uid://ds50sniebvx3v"]
+
+[ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_0ovm6"]
+[ext_resource type="Texture2D" uid="uid://riagytl0uukr" path="res://Sprites/Background.jpeg" id="1_536hw"]
+[ext_resource type="PackedScene" uid="uid://bxpfskj8i7teb" path="res://Scenes/GameScene.tscn" id="2_jda2u"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_b6346"]
+font_size = 71
+outline_size = 4
+outline_color = Color(0.360784, 0.360784, 0.360784, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.698039)
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("credits")]
+texture_filter = 2
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1424.0
+offset_bottom = 686.0
+script = ExtResource("1_0ovm6")
+gameScene = ExtResource("2_jda2u")
+credits = NodePath("PanelContainer")
+
+[node name="Background" type="Sprite2D" parent="Control"]
+texture_filter = 1
+scale = Vector2(1.39174, 1.39174)
+texture = ExtResource("1_536hw")
+
+[node name="RichTextLabel" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.408
+anchor_top = -0.447
+anchor_right = -0.167
+anchor_bottom = -0.281
+offset_left = -0.00799561
+offset_top = -0.357971
+offset_right = -0.191986
+offset_bottom = -0.233994
+text = "Frozen Jump"
+label_settings = SubResource("LabelSettings_b6346")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 255.0
+offset_top = -287.0
+offset_right = 500.0
+offset_bottom = 132.0
+
+[node name="Button" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Play"
+
+[node name="Button2" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Credits"
+
+[node name="Button3" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.408
+anchor_right = 0.153
+anchor_bottom = 0.433
+offset_left = -0.00799561
+offset_top = 68.0
+offset_right = 0.127975
+offset_bottom = -0.0380249
+
+[node name="Credits" type="RichTextLabel" parent="Control/PanelContainer"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+text = "	
+	Game and code by Daniel Bereza aka Blackcatmaxy
+	Backgrounds by kiyomochie on discord
+
+	Free Assets:
+		Shop by brullov on itch.io at [url]https://brullov.itch.io/oak-woodss[/url]
+		Ground tiles by mamanezakon on itch.io at [url]https://mamanezakon.itch.io/forest-tileset[/url]
+	
+	And of course thanks to the Godot contributors for the game engine at [url]https://godotengine.org/[/url]"
+selection_enabled = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="pressed" from="Control/VBoxContainer/Button" to="Control" method="PlayGame"]
+[connection signal="pressed" from="Control/VBoxContainer/Button2" to="Control" method="ShowCredits"]
+[connection signal="pressed" from="Control/VBoxContainer/Button3" to="Control" method="Exit"]

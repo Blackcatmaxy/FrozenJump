@@ -3,6 +3,9 @@ using System;
 
 public partial class WorldVoid : Area2D
 {
+	[Export] 
+	public CameraFollower camera;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -23,6 +26,7 @@ public partial class WorldVoid : Area2D
 			body.QueueFree();
 		else if (body.GetNodeOrNull<RigidPlayer>(".") is RigidPlayer player)
 		{
+			camera.Position = new Vector2(-300, -16);
 			PhysicsServer2D.BodySetState(player.GetRid()
 				, PhysicsServer2D.BodyState.Transform, Transform2D.Identity.Translated(new Vector2(-284, -18)));
 			// body.Position = new Vector2(-284, -18);

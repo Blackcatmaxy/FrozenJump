@@ -4,7 +4,7 @@ using System;
 public partial class PlatformSpawner : Node2D
 {
 	[Export]
-	public PackedScene platform;
+	public PackedScene platform2wide, platform4wide, platform6wide;
 	[Export]
 	public float spawnRange = 10, spawnInterval = 3;
 
@@ -25,8 +25,15 @@ public partial class PlatformSpawner : Node2D
 		if (timeSinceLastSpawn > spawnInterval)
 		{
 			timeSinceLastSpawn = 0;
-			var created = platform.Instantiate<Platform>();
-			AddChild(created);
+			
+			Platform platform = (_random.Next() % 10) switch
+			{
+				< 2  => platform2wide.Instantiate<Platform>(),
+				< 5 => platform4wide.Instantiate<Platform>(),
+				_ => platform6wide.Instantiate<Platform>(),
+			};
+			// var created = platform.Instantiate<Platform>();
+			AddChild(platform);
 			var position = Position;
 			float offset = _random.NextSingle() * spawnRange - spawnRange/2;
 			position.X += offset;
@@ -36,8 +43,8 @@ public partial class PlatformSpawner : Node2D
 			// created.Position = position;
 			
 			// PhysicsServer2D.BodySetState(created.GetRid(), PhysicsServer2D.BodyState.Transform, Transform2D.Identity.Translated(position));
-			created.Position = position;
-			created.Scale = new Vector2(1f/scale, 1);
+			platform.Position = position;
+			platform.Scale = new Vector2(1f/scale, 1);
 		}
 	}
 }
